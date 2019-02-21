@@ -1,5 +1,4 @@
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -20,11 +19,14 @@ public class Main extends Canvas {
 	
 	private boolean running = false;
 	
+	private Renderer renderer;
+	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();	
 	
 	public Main() {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		renderer = new Renderer(WIDTH, HEIGHT, pixels);
 	}
 	
 	private void start() {
@@ -50,9 +52,11 @@ public class Main extends Canvas {
 			return;
 		}
 		
+		renderer.clear();
+		renderer.render();
+		
 		Graphics g = bs.getDrawGraphics();
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		g.dispose();
 		bs.show();
 	}
