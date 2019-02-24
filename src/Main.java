@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 
 import core.graphics.Renderer;
 import core.input.Input;
+import core.level.Level;
+import core.level.RandomLevel;
 
 @SuppressWarnings("serial")
 public class Main extends Canvas {
@@ -22,6 +24,7 @@ public class Main extends Canvas {
 	private boolean running = false;
 	
 	private Renderer renderer;
+	private Level level;
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -33,6 +36,7 @@ public class Main extends Canvas {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		addKeyListener(new Input());
 		renderer = new Renderer(WIDTH, HEIGHT, pixels);
+		level = new RandomLevel(64, 64);
 	}
 	
 	private void start() {
@@ -77,14 +81,10 @@ public class Main extends Canvas {
 	}
 	
 	private void update() {
-		if (Input.isKeyPressed(KeyEvent.VK_W) || Input.isKeyPressed(KeyEvent.VK_UP))    y++;
-		if (Input.isKeyPressed(KeyEvent.VK_S) || Input.isKeyPressed(KeyEvent.VK_DOWN))  y--;
-		if (Input.isKeyPressed(KeyEvent.VK_A) || Input.isKeyPressed(KeyEvent.VK_LEFT))  x++;
-		if (Input.isKeyPressed(KeyEvent.VK_D) || Input.isKeyPressed(KeyEvent.VK_RIGHT)) x--;
-		
-		for (int i = 0; i < Input.KEYS.length; i++)
-			if (Input.KEYS[i])
-				System.out.println("KEY: " + i);
+		if (Input.isKeyPressed(KeyEvent.VK_W) || Input.isKeyPressed(KeyEvent.VK_UP))    y--;
+		if (Input.isKeyPressed(KeyEvent.VK_S) || Input.isKeyPressed(KeyEvent.VK_DOWN))  y++;
+		if (Input.isKeyPressed(KeyEvent.VK_A) || Input.isKeyPressed(KeyEvent.VK_LEFT))  x--;
+		if (Input.isKeyPressed(KeyEvent.VK_D) || Input.isKeyPressed(KeyEvent.VK_RIGHT)) x++;
 	}
 	
 	private void render() {
@@ -95,7 +95,7 @@ public class Main extends Canvas {
 		}
 		
 		renderer.clear();
-		renderer.render(x, y);
+		level.render(x, y, renderer);
 		
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
