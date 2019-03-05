@@ -1,5 +1,7 @@
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
@@ -8,6 +10,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import core.entity.mob.Player;
 import core.graphics.Renderer;
 import core.input.Input;
 import core.level.Level;
@@ -25,18 +28,17 @@ public class Main extends Canvas {
 	
 	private Renderer renderer;
 	private Level level;
+	private Player player;
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-	
-	private int x = 0;
-	private int y = 0;
 	
 	public Main() {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		addKeyListener(new Input());
 		renderer = new Renderer(WIDTH, HEIGHT, pixels);
 		level = new RandomLevel(64, 64);
+		player = new Player(new Input());
 	}
 	
 	private void start() {
@@ -81,10 +83,10 @@ public class Main extends Canvas {
 	}
 	
 	private void update() {
-		if (Input.isKeyPressed(KeyEvent.VK_W) || Input.isKeyPressed(KeyEvent.VK_UP))    y--;
-		if (Input.isKeyPressed(KeyEvent.VK_S) || Input.isKeyPressed(KeyEvent.VK_DOWN))  y++;
-		if (Input.isKeyPressed(KeyEvent.VK_A) || Input.isKeyPressed(KeyEvent.VK_LEFT))  x--;
-		if (Input.isKeyPressed(KeyEvent.VK_D) || Input.isKeyPressed(KeyEvent.VK_RIGHT)) x++;
+		if (Input.isKeyPressed(KeyEvent.VK_W) || Input.isKeyPressed(KeyEvent.VK_UP))    player.y--;
+		if (Input.isKeyPressed(KeyEvent.VK_S) || Input.isKeyPressed(KeyEvent.VK_DOWN))  player.y++;
+		if (Input.isKeyPressed(KeyEvent.VK_A) || Input.isKeyPressed(KeyEvent.VK_LEFT))  player.x--;
+		if (Input.isKeyPressed(KeyEvent.VK_D) || Input.isKeyPressed(KeyEvent.VK_RIGHT)) player.x++;
 	}
 	
 	private void render() {
@@ -95,7 +97,10 @@ public class Main extends Canvas {
 		}
 		
 		renderer.clear();
-		level.render(x, y, renderer);
+		int xScroll = player.x - renderer.getWidth() / 2;
+		int yScroll = player.y - renderer.getHeight() / 2;
+		level.render(xScroll, yScroll, renderer);
+		player.render(renderer);
 		
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);

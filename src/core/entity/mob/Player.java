@@ -2,6 +2,8 @@ package core.entity.mob;
 
 import java.awt.event.KeyEvent;
 
+import core.graphics.Renderer;
+import core.graphics.Sprite;
 import core.input.Input;
 
 public class Player extends Mob {
@@ -29,8 +31,8 @@ public class Player extends Mob {
 			move(xa, ya);
 	}
 	
-	public void render() {
-		
+	public void render(Renderer renderer) {
+		renderer.renderPlayer(x, y, Sprite.player);
 	}
 	
 }
