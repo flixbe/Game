@@ -10,10 +10,10 @@ public abstract class Mob extends Entity {
 	protected boolean moving = false;
 	
 	public void move(int xAxis, int yAxis) {
-		if (xAxis > 0) direction = 1;
-		if (xAxis < 0) direction = 2;
+		if (yAxis < 0) direction = 1;
+		if (xAxis > 0) direction = 2;
 		if (yAxis > 0) direction = 3;
-		if (yAxis < 0) direction = 0;
+		if (xAxis < 0) direction = 4;
 		
 		
 		if (!collision()) {

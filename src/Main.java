@@ -83,10 +83,7 @@ public class Main extends Canvas {
 	}
 	
 	private void update() {
-		if (Input.isKeyPressed(KeyEvent.VK_W) || Input.isKeyPressed(KeyEvent.VK_UP))    player.y--;
-		if (Input.isKeyPressed(KeyEvent.VK_S) || Input.isKeyPressed(KeyEvent.VK_DOWN))  player.y++;
-		if (Input.isKeyPressed(KeyEvent.VK_A) || Input.isKeyPressed(KeyEvent.VK_LEFT))  player.x--;
-		if (Input.isKeyPressed(KeyEvent.VK_D) || Input.isKeyPressed(KeyEvent.VK_RIGHT)) player.x++;
+		player.update();
 	}
 	
 	private void render() {
