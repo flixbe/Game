@@ -8,7 +8,9 @@ public class Sprite {
 	
 	private SpriteSheet sheet;
 	
-	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
+	public static Sprite grass = new Sprite(16, 0, 1, SpriteSheet.tiles);
+	public static Sprite flower = new Sprite(16, 1, 2, SpriteSheet.tiles);
+	public static Sprite rock = new Sprite(16, 2, 1, SpriteSheet.tiles);
 	public static Sprite void_sprite = new Sprite(16, 0);
 	
 	public static Sprite player_forward_stay  = new Sprite(16, 0, 12, SpriteSheet.tiles);

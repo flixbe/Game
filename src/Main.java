@@ -1,9 +1,6 @@
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -14,7 +11,7 @@ import core.entity.mob.Player;
 import core.graphics.Renderer;
 import core.input.Input;
 import core.level.Level;
-import core.level.RandomLevel;
+import core.level.SpawnLevel;
 
 @SuppressWarnings("serial")
 public class Main extends Canvas {
@@ -37,8 +34,8 @@ public class Main extends Canvas {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		addKeyListener(new Input());
 		renderer = new Renderer(WIDTH, HEIGHT, pixels);
-		level = new RandomLevel(64, 64);
-		player = new Player(new Input());
+		level = new SpawnLevel("/textures/level.png");
+		player = new Player(8 * 16, 7 * 16, new Input());
 	}
 	
 	private void start() {
